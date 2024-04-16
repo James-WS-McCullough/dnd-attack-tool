@@ -60,13 +60,6 @@ const AttackForm: React.FC = () => {
               <FormLabel>Targets</FormLabel>
               <Input value={weaponAttack.targets} onChange={(e) => handleInputChange(attack.id, 'targets', e.target.value)} />
             </FormControl>
-          <FormControl>
-              <FormLabel>Hit Damage</FormLabel>
-              <DamageDiceComponent
-                damageEntry={{ dice: '1d6', damageType: 'SLASHING' }}
-                onChange={(entry) => handleInputChange(attack.id, 'hitDamage', entry)}
-              />
-            </FormControl>
           </>
         );
       case AttackType.Spell:
@@ -123,6 +116,17 @@ const AttackForm: React.FC = () => {
     <Box>
       {attacks.map((attack) => (
         <VStack key={attack.id} divider={<StackDivider borderColor="gray.200" />} p={5}>
+        <FormControl>
+            <FormLabel>Name</FormLabel>
+            <Input value={attack.name} onChange={(e) => handleInputChange(attack.id, 'name', e.target.value)} />
+          </FormControl>
+          <FormControl>
+              <FormLabel>Hit Damage</FormLabel>
+              <DamageDiceComponent
+                damageEntry={{ dice: '1d6', damageType: 'SLASHING' }}
+                onChange={(entry) => handleInputChange(attack.id, 'hitDamage', entry)}
+              />
+            </FormControl>
           <FormControl>
             <FormLabel>Attack Type</FormLabel>
             <Select value={attack.type} onChange={(e) => handleInputChange(attack.id, 'type', e.target.value as AttackType)}>
