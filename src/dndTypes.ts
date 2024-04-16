@@ -5,6 +5,8 @@ export enum AttackType {
     ConditionEffect = "Condition Effect",
     Utility = "Utility"
   }
+
+export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
   
   // Sub-types for specific behaviors within main types
   export enum WeaponSubType {
