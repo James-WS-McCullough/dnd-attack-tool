@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import AttackForm from './AttackForm';
-import DamageDiceComponent from './DamageDiceComponent';
+import DiceComponent from './components/DiceComponent';
+import DamageDiceComponent from './components/DamageDiceComponent';
 
 function App() {
   return (

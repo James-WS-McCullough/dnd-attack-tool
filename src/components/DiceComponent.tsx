@@ -1,13 +1,14 @@
-import { Box, Button, HStack, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, IconButton, Input, Select, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { diceOptions } from "./dndTypes";
+import { diceOptions } from "../dndTypes";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 interface DiceInput {
     numberOfDice: number;
     typeOfDice: string;
   }
   
-  const DamageDiceComponent: React.FC = () => {
+  const DiceComponent: React.FC = () => {
     const [diceList, setDiceList] = React.useState<DiceInput[]>([
       { numberOfDice: 1, typeOfDice: 'd6' }
     ]);
@@ -26,6 +27,11 @@ interface DiceInput {
     const addDiceEntry = () => {
       setDiceList([...diceList, { numberOfDice: 1, typeOfDice: 'd6' }]);
     };
+
+    const removeDiceEntry = (index: number) => {
+        const newDiceList = diceList.filter((_, idx) => idx !== index);
+        setDiceList(newDiceList);
+      }
   
     const calculateAverageDamage = () => {
       const averageFromDice = diceList.reduce((acc, { numberOfDice, typeOfDice }) => {
@@ -35,6 +41,24 @@ interface DiceInput {
       }, 0);
       return averageFromDice + modifier;
     };
+
+    const calculateMinDamage = () => {
+        const minFromDice = diceList.reduce((acc, { numberOfDice, typeOfDice }) => {
+          const diceMin = 1; // Extract '6' from 'd6'
+          const minPerDie = diceMin; // Average roll of the dice
+          return acc + (numberOfDice * minPerDie);
+        }, 0);
+        return minFromDice + modifier;
+      }
+
+      const calculateMaxDamage = () => {
+        const maxFromDice = diceList.reduce((acc, { numberOfDice, typeOfDice }) => {
+          const diceMax = parseInt(typeOfDice.substring(1)); // Extract '6' from 'd6'
+          const maxPerDie = diceMax; // Average roll of the dice
+          return acc + (numberOfDice * maxPerDie);
+        }, 0);
+        return maxFromDice + modifier;
+      }
   
     return (
         <HStack>
@@ -66,11 +90,24 @@ interface DiceInput {
             onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
             type="number"
           />
-        <Button onClick={addDiceEntry}>Add Dice</Button>
-        <Text mt={2}>Average Damage: {calculateAverageDamage().toFixed(2)}</Text>
+        <IconButton
+        onClick={addDiceEntry}
+        colorScheme="green"
+        aria-label="Add Dice"
+        icon={<AddIcon />}
+        />
+        {diceList.length > 0 && (
+          <IconButton 
+          onClick={() => removeDiceEntry(diceList.length - 1)}
+          colorScheme="red"
+          aria-label="Remove Dice"
+          icon={<MinusIcon />}
+          />
+        )}
+        <Text>({calculateMinDamage()} : {calculateAverageDamage().toFixed(1)} : {calculateMaxDamage()})</Text>
         </HStack>
         </HStack>
     );
   };
 
-export default DamageDiceComponent;
+export default DiceComponent;
