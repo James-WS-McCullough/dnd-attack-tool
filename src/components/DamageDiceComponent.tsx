@@ -16,7 +16,6 @@ export const DamageDiceComponent = ({ onChange, damageEntry }: { onChange: (entr
     <HStack>
       <DiceComponent onChange={handleDiceChange} dice={damageEntry.dice} />
       <HStack>
-        <Text>Type of Damage:</Text>
         <Select value={damageEntry.damageType} onChange={handleTypeChange}>
           {Object.entries(damageTypeEmojis).map(([type, emoji]) => (
             <option key={type} value={type}>{emoji} {damageTypes[type as keyof typeof damageTypes]}</option>

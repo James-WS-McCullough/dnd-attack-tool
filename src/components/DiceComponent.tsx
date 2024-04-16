@@ -113,7 +113,11 @@ interface DiceInput {
           icon={<MinusIcon />}
           />
         )}
-        <Text>({calculateMinDamage()} : {calculateAverageDamage().toFixed(1)} : {calculateMaxDamage()})</Text>
+        <Text
+        fontSize="md"
+        fontStyle={'italic'}
+        color={'gray.500'}
+        >({calculateMinDamage()} : {calculateAverageDamage()} : {calculateMaxDamage()})</Text>
         </HStack>
         </HStack>
     );

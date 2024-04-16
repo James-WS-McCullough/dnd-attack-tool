@@ -26,14 +26,13 @@ const AttackForm: React.FC = () => {
   };
 
   const handleInputChange = (id: number, field: string, value: any) => {
-    const newAttacks = attacks.map(attack => {
-      if (attack.id === id) {
-        return { ...attack, [field]: value };
-      }
-      return attack;
-    });
-    setAttacks(newAttacks);
-  };
+    setAttacks(attacks => attacks.map(attack => {
+        if (attack.id === id) {
+            return { ...attack, [field]: value };
+        }
+        return attack;
+    }));
+};
 
   const renderAttackFields = (attack: Attack) => {
     switch (attack.type) {
@@ -61,7 +60,7 @@ const AttackForm: React.FC = () => {
               <FormLabel>Targets</FormLabel>
               <Input value={weaponAttack.targets} onChange={(e) => handleInputChange(attack.id, 'targets', e.target.value)} />
             </FormControl>
-            <FormControl>
+          <FormControl>
               <FormLabel>Hit Damage</FormLabel>
               <DamageDiceComponent
                 damageEntry={{ dice: '1d6', damageType: 'SLASHING' }}
