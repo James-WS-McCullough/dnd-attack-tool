@@ -4,7 +4,8 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, WeaponAttack, AttackType, WeaponSubType, SpellAttack, SpellSubType, AoEAttack, AoESubType } from './dndTypes';
+import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, WeaponAttack, AttackType, WeaponSubType, SpellAttack, SpellSubType, AoEAttack, AoESubType, DamageEntry } from './dndTypes';
+import DamageDiceComponent from './components/DamageDiceComponent';
 const AttackForm: React.FC = () => {
   const [attacks, setAttacks] = useState<Attack[]>([]);
 
@@ -18,7 +19,7 @@ const AttackForm: React.FC = () => {
       reachOrRange: '',
       targets: '',
       hitDamage: '',
-      damageType: 'Slashing',
+      damageType: damageTypes.SLASHING,
       description: ''
     };
     setAttacks([...attacks, newAttack]);
@@ -62,11 +63,10 @@ const AttackForm: React.FC = () => {
             </FormControl>
             <FormControl>
               <FormLabel>Hit Damage</FormLabel>
-              <Input value={weaponAttack.hitDamage} onChange={(e) => handleInputChange(attack.id, 'hitDamage', e.target.value)} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Damage Type</FormLabel>
-              <Input value={weaponAttack.damageType} onChange={(e) => handleInputChange(attack.id, 'damageType', e.target.value)} />
+              <DamageDiceComponent
+                damageEntry={{ dice: '1d6', damageType: 'SLASHING' }}
+                onChange={(entry) => handleInputChange(attack.id, 'hitDamage', entry)}
+              />
             </FormControl>
           </>
         );

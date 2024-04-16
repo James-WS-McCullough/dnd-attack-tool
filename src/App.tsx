@@ -7,7 +7,6 @@ function App() {
   return (
     <ChakraProvider>
       <AttackForm />
-      <DamageDiceComponent />
     </ChakraProvider>
   );
 }

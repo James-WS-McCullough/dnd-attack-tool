@@ -37,6 +37,8 @@ export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
     name: string;
     type: AttackType;
     description?: string;
+    hitDamage: string;
+    damageType: damageTypes;
   }
   
   // Extended interfaces
@@ -45,8 +47,6 @@ export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
     toHit: string;
     reachOrRange: string;
     targets: string;
-    hitDamage: string;
-    damageType: damageTypes;
   }
   
   export interface SpellAttack extends BaseAttack {
@@ -76,6 +76,10 @@ export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
   // Union type for all attack types
   export type Attack = WeaponAttack | SpellAttack | AoEAttack | ConditionEffectAttack | UtilityAttack;
   
+  export interface DamageEntry {
+    dice: string; // Example: '2d6'
+    damageType: keyof typeof damageTypes;
+  }
 
 export const damageTypes = {
    ACID: "Acid",

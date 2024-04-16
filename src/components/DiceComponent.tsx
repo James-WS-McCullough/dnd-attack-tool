@@ -7,12 +7,21 @@ interface DiceInput {
     numberOfDice: number;
     typeOfDice: string;
   }
+
+  type DiceComponentProps = {
+    onChange: (dice: string) => void;
+    dice: string;
+  }
   
-  const DiceComponent: React.FC = () => {
+  const DiceComponent: React.FC <DiceComponentProps> = ({ onChange }) => {
     const [diceList, setDiceList] = React.useState<DiceInput[]>([
       { numberOfDice: 1, typeOfDice: 'd6' }
     ]);
     const [modifier, setModifier] = React.useState(0);
+
+    React.useEffect(() => {
+        onChange(diceList.map(({ numberOfDice, typeOfDice }) => `${numberOfDice}${typeOfDice}`).join('+') + `+${modifier}`);
+      }, [diceList, modifier, onChange]);
   
     const handleDiceChange = (index: number, field: keyof DiceInput, value: number | string) => {
       const newDiceList = diceList.map((entry, idx) => {
