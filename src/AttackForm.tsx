@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Box, Button, FormControl, FormLabel, Heading, IconButton, Input, Select, StackDivider, Textarea, VStack, Wrap, WrapItem, useToast
+  Box, Button, FormControl, FormLabel, HStack, Heading, IconButton, Input, Select, StackDivider, Textarea, VStack, Wrap, WrapItem, useToast
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -71,7 +71,7 @@ const exportAttacks = () => {
       case AttackType.Melee:
         const weaponAttack = attack as MeleeAttack;
         return (
-          <VStack key={attack.id} divider={<StackDivider borderColor="gray.200" />} width="100%">
+          <VStack key={attack.id} width="100%">
             <FormControl>
               <FormLabel>To Hit Modifier</FormLabel>
               <Input 
@@ -139,9 +139,17 @@ const exportAttacks = () => {
   };
 
   return (
-    <Box>
+    <VStack 
+    padding="5"
+    width="100%"
+    >
       {attacks.map((attack) => (
-        <VStack key={attack.id} divider={<StackDivider borderColor="gray.200" />} p={5}>
+        <VStack key={attack.id} 
+        p={5}
+        backgroundColor="blue.800"
+        borderRadius="md"
+        border="1px solid"
+        >
         <FormControl>
             <FormLabel>Name</FormLabel>
             <Input value={attack.name} onChange={(e) => handleInputChange(attack.id, 'name', e.target.value)} />
@@ -169,18 +177,29 @@ const exportAttacks = () => {
             <FormLabel>Description</FormLabel>
             <Textarea value={attack.description} onChange={(e) => handleInputChange(attack.id, 'description', e.target.value)} />
           </FormControl>
+          <Button
+            onClick={() => setAttacks(attacks.filter(a => a.id !== attack.id))}
+            colorScheme='red'
+            alignSelf='flex-end'
+          >
+            Remove
+          </Button>
         </VStack>
       ))}
+      <HStack paddingY={5}
+      >
+
       <Button onClick={addAttack}>Add Attack</Button>
       <Button 
       colorScheme="blue"
       onClick={exportAttacks}
       >Export Attacks
       </Button>
+      </HStack>
       <Textarea value={attackString}
       isReadOnly
       />
-    </Box>
+    </VStack>
   );
 };
 

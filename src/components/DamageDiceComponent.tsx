@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HStack, Select } from "@chakra-ui/react";
+import { HStack, Select, VStack } from "@chakra-ui/react";
 import { DamageEntry, damageTypeEmojis, damageTypes } from "../dndTypes";
 import DiceComponent from "./DiceComponent";
 
@@ -24,14 +24,16 @@ const DamageDiceComponent = ({ onChange, initialDamageEntry }: DamageDiceCompone
   };
 
   return (
-    <HStack>
+    <VStack
+     alignItems="flex-start"
+    >
       <DiceComponent onChange={handleDiceChange}/>
       <Select value={damageEntry.damageType} onChange={handleTypeChange}>
         {Object.entries(damageTypeEmojis).map(([type, emoji]) => (
           <option key={type} value={type}>{emoji} {damageTypes[type as keyof typeof damageTypes ]}</option>
         ))}
       </Select>
-    </HStack>
+    </VStack>
   );
 };
 
