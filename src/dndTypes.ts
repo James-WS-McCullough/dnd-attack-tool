@@ -1,5 +1,6 @@
 export enum AttackType {
-    Weapon = "Weapon",
+    Melee = "Melee",
+    Ranged = "Ranged",
     Spell = "Spell",
     AoE = "AoE",
     ConditionEffect = "Condition Effect",
@@ -7,12 +8,7 @@ export enum AttackType {
   }
 
 export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
-  
-  // Sub-types for specific behaviors within main types
-  export enum WeaponSubType {
-    Melee = "Melee",
-    Ranged = "Ranged"
-  }
+
   
   export enum SpellSubType {
     AttackRoll = "Attack Roll",
@@ -42,13 +38,17 @@ export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
   }
   
   // Extended interfaces
-  export interface WeaponAttack extends BaseAttack {
-    subType: WeaponSubType;
+  export interface MeleeAttack extends BaseAttack {
     toHit: string;
-    reachOrRange: string;
-    targets: string;
+    reach: string;
   }
-  
+    export interface RangedAttack extends BaseAttack {
+        toHit: string;
+        shortRange: string;
+        longRange: string;
+        targets: string;
+    }
+
   export interface SpellAttack extends BaseAttack {
     subType: SpellSubType;
     spellSaveDC?: string;
@@ -74,7 +74,7 @@ export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
   }
   
   // Union type for all attack types
-  export type Attack = WeaponAttack | SpellAttack | AoEAttack | ConditionEffectAttack | UtilityAttack;
+  export type Attack = MeleeAttack | RangedAttack | SpellAttack | AoEAttack | ConditionEffectAttack | UtilityAttack;
   
   export interface DamageEntry {
     dice: string; // Example: '2d6'
