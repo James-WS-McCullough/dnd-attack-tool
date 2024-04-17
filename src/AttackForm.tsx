@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, AttackType, SpellAttack, SpellSubType, AoEAttack, AoESubType, DamageEntry, MeleeAttack } from './dndTypes';
+import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, AttackType, SpellAttack, SpellSubType, AoEAttack, AoESubType, DamageEntry, MeleeAttack, RangedAttack } from './dndTypes';
 import DamageDiceComponent from './components/DamageDiceComponent';
 const AttackForm: React.FC = () => {
   const [attacks, setAttacks] = useState<Attack[]>([]);
@@ -39,6 +39,10 @@ const formatAttackDescription = (attack: Attack) => {
     case AttackType.Melee:
       const meleeAttack = attack as MeleeAttack;
       description = `${meleeAttack.name}. Melee Attack: [rollable]{diceNotation:"1d20+${meleeAttack.toHit}",rollType:"to hit",rollAction:"${meleeAttack.name}"}[/rollable] to hit, reach ${meleeAttack.reach}. Hit: ${meleeAttack.hitDamage} [rollable]{diceNotation:"${meleeAttack.hitDamage}",rollType:"damage",rollAction:"${meleeAttack.name}",rollDamageType:"${damageTypes[meleeAttack.damageType as keyof typeof damageTypes]}"}[/rollable] ${damageTypes[meleeAttack.damageType as keyof typeof damageTypes]} damage.\n${meleeAttack.description}`;
+      break;
+    case AttackType.Ranged:
+      const rangedAttack = attack as RangedAttack;
+      description = `${rangedAttack.name}. Ranged Attack: [rollable]{diceNotation:"1d20+${rangedAttack.toHit}",rollType:"to hit",rollAction:"${rangedAttack.name}"}[/rollable] to hit, range ${rangedAttack.shortRange}/${rangedAttack.longRange}. Hit: ${rangedAttack.hitDamage} [rollable]{diceNotation:"${rangedAttack.hitDamage}",rollType:"damage",rollAction:"${rangedAttack.name}",rollDamageType:"${damageTypes[rangedAttack.damageType as keyof typeof damageTypes]}"}[/rollable] ${damageTypes[rangedAttack.damageType as keyof typeof damageTypes]} damage.\n${rangedAttack.description}`;
       break;
     // case AttackType.Spell:
     //   description = `${attack.name}. ${attack.subType} Spell Attack: ${attack.effectDescription}. Spell Save DC: ${attack.spellSaveDC}, [rollable]{diceNotation:"${attack.hitDamage}",rollType:"damage",rollAction:"${attack.name}",rollDamageType:"${attack.damageType}"}[/rollable] ${attack.damageType} damage.`;
@@ -88,6 +92,33 @@ const exportAttacks = () => {
             </FormControl>
           </VStack>
         );
+        case AttackType.Ranged:
+          const rangedAttack = attack as RangedAttack;
+          return (
+            <VStack key={attack.id} width="100%">
+              <FormControl>
+                <FormLabel>To Hit Modifier</FormLabel>
+                <Input 
+                value={rangedAttack.toHit}
+                placeholder='5'
+                onChange={(e) => handleInputChange(attack.id, 'toHit', e.target.value)} />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Ranges (ft)</FormLabel>
+                <HStack>
+                <Input 
+                value={rangedAttack.shortRange}
+                placeholder='30'
+                onChange={(e) => handleInputChange(attack.id, 'shortRange', e.target.value)} />
+                  <Input 
+                value={rangedAttack.longRange}
+                placeholder='120'
+                onChange={(e) => handleInputChange(attack.id, 'longRange', e.target.value)} />
+                </HStack>
+              </FormControl>
+            </VStack>
+          );
+
       // case AttackType.Spell:
       //   const spellAttack = attack as SpellAttack;
       //   return (
