@@ -7,6 +7,15 @@ export enum AttackType {
     Utility = "Utility"
   }
 
+  export const attackTypeEmojis = {
+    Melee: "🗡️",
+    Ranged: "🏹",
+    Spell: "🔮",
+    AoE: "💥",
+    ConditionEffect: "🤕",
+    Utility: "🛡️"
+  }
+
 export  const diceOptions = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
 
   
