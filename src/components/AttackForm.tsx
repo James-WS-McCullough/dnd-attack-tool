@@ -4,8 +4,8 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, AttackType, SpellAttack, SpellSubType, AoEAttack, AoESubType, DamageEntry, MeleeAttack, RangedAttack } from './dndTypes';
-import DamageDiceComponent from './components/DamageDiceComponent';
+import { Attack, damageTypes, damageTypeEmojis, conditions, stats, statEmojis, statColors, AttackType, SpellAttack, SpellSubType, AoEAttack, AoESubType, DamageEntry, MeleeAttack, RangedAttack } from '../dndTypes';
+import DamageDiceComponent from './DamageDiceComponent';
 const AttackForm: React.FC = () => {
   const [attacks, setAttacks] = useState<Attack[]>([]);
   const [attackString, setAttackString] = useState<string>('');
